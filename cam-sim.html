@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photographic Images</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4KWHRSSZMG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4KWHRSSZMG');
+  </script>
+
   <style>
     /* ===================================================
        FONTS & RESET
@@ -1763,6 +1773,8 @@ function updateEVBar() {
 ===================================================== */
 
 document.getElementById('btnSnap').addEventListener('click', () => {
+  gtag('event', 'capture_photo', { scene: SCENES[currentScene].id });
+
   // 1. Flash effect
   const flashEl = document.getElementById('flash');
   flashEl.classList.remove('go');
@@ -1790,6 +1802,8 @@ document.getElementById('btnSnap').addEventListener('click', () => {
 ===================================================== */
 
 document.getElementById('btnReset').addEventListener('click', () => {
+  gtag('event', 'reset_camera', { scene: SCENES[currentScene].id });
+
   const d = SCENES[currentScene].defaults;
   slISO.value = d.iso;
   slAp.value  = d.ap;
@@ -1840,7 +1854,10 @@ SCENES[0]._bg.onload = () => {
 
 // Scene tab clicks
 document.querySelectorAll('.scene-tab').forEach((tab, i) => {
-  tab.addEventListener('click', () => loadScene(i));
+  tab.addEventListener('click', () => {
+    gtag('event', 'switch_scene', { scene: SCENES[i].id });
+    loadScene(i);
+  });
 });
 
 </script>
